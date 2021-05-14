@@ -26,12 +26,11 @@ jobs:
           CI: true
       - name: zip output
         run: |
-          cd out
-          zip files *.*
+          zip -r files out
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./out/files.zip
+          files: files.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
