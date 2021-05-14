@@ -1,0 +1,40 @@
+name: Auto release tag
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js v10
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+      - name: yarn install, build, and test
+        run: |
+          yarn install
+          yarn export
+        env:
+          CI: true
+      - name: zip output
+        run: |
+          cd out
+          zip files *.*
+      - name: Generate Changelog
+        run: echo "# Good things have arrived" > ${{ github.workflow }}-CHANGELOG.txt
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: files.zip
+          body_path: ${{ github.workflow }}-CHANGELOG.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
