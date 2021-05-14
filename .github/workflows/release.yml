@@ -27,13 +27,10 @@ jobs:
       - name: zip output
         run: |
           zip -r files out
-      - name: Generate Changelog
-        run: echo "# Good things have arrived" > ${{ github.workflow }}-CHANGELOG.txt
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: files.zip
-          body_path: ${{ github.workflow }}-CHANGELOG.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
