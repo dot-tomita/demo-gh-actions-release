@@ -15,7 +15,7 @@ export default function Home({ hoge }) {
       <div className="container">
         <h1>{hoge} world!!</h1>
         <p>こんにちは！！！</p>
-        <p>このpushはmasterにマージされてもworkflowは実行されないはず</p>
+        <p>今度は実行されるはず</p>
       </div>
     </>
   );
